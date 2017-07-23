@@ -1,9 +1,53 @@
 #include <vector>
 #include <algorithm>
 #include "iostream"
+#include <stack>
+#include <string>
+#include <stack>
+#include <unordered_set>
+#include <unordered_map>
+#include <map>
+#include "list"
+#include <sstream>
+#include <iterator>
+#include <queue>
 
 using namespace std;
 
+/*
+ * RomanNumeralToInt supports Roman 
+ * to numeric conversion between 0 - 500
+ */
+
+int RomanNumeralToInt(string s){
+    
+    unordered_map<char, int> m = {{'I',1},{'V',5},{'X',10},{'L',50},{'C',100}};
+    
+    int temp;
+    int ret = 0;
+
+    stack <int> st;
+    if(!s.size()) return 0;
+    for(int i = 0; i<(int)s.size();i++){
+        if(st.empty())st.push(m.find(s[i])->second);
+        
+        else {
+            if(m.find(s[i])->second  > st.top()) {
+                temp = st.top();
+                st.pop();
+                st.push(m.find(s[i])->second - temp);
+            }
+            else st.push(m.find(s[i])->second);
+        }
+    
+    }
+        while(!st.empty())
+    {
+        ret += st.top();
+        st.pop();
+    }
+    return ret;
+}
 
 int HighestSmaller_than_num_util(vector<int> &v, int point, int num){
     
@@ -82,10 +126,10 @@ int HighestSmaller_than_num(int num){
 
 }
 
-
 int main(){
 
     cout<<HighestSmaller_than_num(97248)<<endl;
+    cout<<RomanNumeralToInt("CLXXVIII");   
 
-return 0;
+    return 0;
 }
