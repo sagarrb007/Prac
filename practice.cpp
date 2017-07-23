@@ -59,7 +59,6 @@ int HighestSmaller_than_num(int num){
     vector<int> v;
 
     int smallest = num %10;
-   // int temp = num;
     v.push_back(smallest);
     
     int point;
