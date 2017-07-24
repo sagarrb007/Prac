@@ -126,6 +126,25 @@ int HighestSmaller_than_num(int num){
 
 }
 
+/*
+ * firstUniqChar : Returns the first unique char
+ *                 in the string. 
+ * Leetcode: 387
+ */
+
+int firstUniqChar(string s) {
+
+     int hmap[26] = {0};
+
+     for(int i=0;i<s.length();i++)
+         hmap[s[i] - 'a']++;
+
+     for(int i=0;i<s.length();i++)
+         if (hmap[s[i] - 'a'] == 1) return i;
+
+     return -1;
+}
+
 int main(){
 
     cout<<HighestSmaller_than_num(97248)<<endl;
