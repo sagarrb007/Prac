@@ -6,21 +6,22 @@ struct Commit{
 };
 
 /*
-   LinearCompare : 
-      Params:Takes 2 stack<Commit> as input.
-      
-      To be only called with linear components in the stack, to perform 1-1 comparision between the commit nodes of two stacks
-      
-      return : Returns Commit->parent of the Ancestor.
-
+ * LinearCompare : 
+ *    Params:Takes 2 stack<Commit> as input.
+ *    
+ *    To be only called with linear components in the stack, 
+ *    to perform 1-1 comparision between the commit nodes of
+ *    two stacks
+ *     
+ *    return : Returns Commit->parent of the Ancestor.
 */
 
 Commit* LinearCompare(stack<Commit> &st0, stack<Commit> &st1) {
   
   /*
-   *Ideally LinearCompare should not be called 
-   *when stack sizes are unequal,
-   *still returns undefined result.
+   * Ideally LinearCompare should not be called 
+   * when stack sizes are unequal,
+   * still returns undefined result.
    */
    
   if(st0.size()!=st1.size()) return NULL;
