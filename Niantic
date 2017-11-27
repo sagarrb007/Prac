@@ -1,0 +1,90 @@
+struct Commit{
+  
+  int id;
+  struct Commit* parent;
+  
+};
+
+/*
+   LinearCompare : 
+      Params:Takes 2 stack<Commit> as input.
+      
+      To be only called with linear components in the stack, to perform 1-1 comparision between the commit nodes of two stacks
+      
+      return : Returns Commit->parent of the Ancestor.
+
+*/
+
+Commit* LinearCompare(stack<Commit> &st0, stack<Commit> &st1) {
+  
+  /*
+   *Ideally LinearCompare should not be called 
+   *when stack sizes are unequal,
+   *still returns undefined result.
+   */
+   
+  if(st0.size()!=st1.size()) return NULL;
+  
+  while(!st0.empty()) {
+    
+    if(st0.top() == st1.top()) return st0.top();
+    st0.pop();
+    st1.pop();
+  }
+  
+  /*
+   * Control would never reach here
+   * as there always will be an ancestor, 
+   * handling cases where nodes can come in from 
+   * different trees.
+   */
+   
+  return NULL;
+}
+
+Commit* FCA(Commit *c0, Commit *c1) {
+  
+  stack<Commit> st0;
+  stack<Commit> st1;
+  
+  Commit temp0 = c0;
+  Commit temp1 = c1;
+  
+  // Populating the stacks from both the Commit Nodes.
+  
+  while(temp0 != NULL) {
+    
+    st0.push(temp0);
+    temp0 = temp0->parent;
+    
+  }
+  
+  while(temp1 != NULL) {
+    
+    st1.push(temp1);
+    temp1 = temp1->parent;
+    
+  }
+  
+  /* Handling Non Linear stack sizes : 
+  *  if st0.size() > st1.size(), we know the ancestor between c0 and c1 
+  *  will be atleast after the sizes of both stack are equal. Corollary 
+  *  also holds true
+  */
+  
+  if(st0.size() > st1.size()) {
+    
+    while(st0.top() != st1.top() && st0.size() != st1.size()) st0.pop();
+    return LinearCompare(st0,st1);
+  }
+  
+  else if(st0.size() < st1.size()) {
+    
+    while(st0.top() != st1.top() && st0.size() != st1.size()) st1.pop();
+    return LinearCompare(st0,st1);
+  }
+  
+  // Linear stack sizes return a direct comparision
+  
+  return LinearCompare(st0,st1);
+}
