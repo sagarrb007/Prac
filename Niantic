@@ -43,27 +43,38 @@ Commit* LinearCompare(stack<Commit> &st0, stack<Commit> &st1) {
   return NULL;
 }
 
-Commit* FCA(Commit *c0, Commit *c1) {
+Commit* FindCommonAncestor(Commit *c0, Commit *c1) {
   
   stack<Commit> st0;
   stack<Commit> st1;
   
-  Commit temp0 = c0;
-  Commit temp1 = c1;
+  Commit *temp0 = c0;
+  Commit *temp1 = c1;
   
   // Populating the stacks from both the Commit Nodes.
   
-  while(temp0 != NULL) {
+  while(temp0 != NULL && temp1 != NULL) {
+    // Tries to see if there is any straight forward result available.
+    if(temp0->parent == temp1->parent) return temp0->parent;
     
     st0.push(temp0);
     temp0 = temp0->parent;
     
+    st1.push(temp1);
+    temp1 = temp1->parent;
   }
   
   while(temp1 != NULL) {
     
     st1.push(temp1);
     temp1 = temp1->parent;
+    
+  }
+  
+  while(temp0 != NULL) {
+    
+    st0.push(temp0);
+    temp0 = temp0->parent;
     
   }
   
